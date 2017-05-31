@@ -1,0 +1,8 @@
+{
+    "require": {
+        "dompdf/dompdf": "^0.8.0",
+        "sabre/vobject": "^4.1",
+        "twig/twig": "^1.33",
+        "rlanvin/php-rrule": "^1.5"
+    }
+}
