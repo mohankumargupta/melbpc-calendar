@@ -1,15 +1,30 @@
 <?php
-use Sabre\VObject;
-
 include 'vendor/autoload.php';
 
+use Sabre\VObject;
+date_default_timezone_set('Australia/Melbourne');
 $iCalendar = VObject\Reader::read(
-   file_get_contents('wordpress.ics'), VObject\Reader::OPTION_FORGIVING
+   file_get_contents('recur.ics'), VObject\Reader::OPTION_FORGIVING
 );
 
-$latestCalendar = $iCalendar->expand(new DateTimeImmutable('2015-01-01'), new DateTimeImmutable('2020-01-01'));
-$events = $latestCalendar->getBaseComponents('VEVENT');
+$latestCalendar = $iCalendar->expand(new \DateTime('2013-09-28'), new \DateTime('2014-09-11'));
+if (!$latestCalendar->VEVENT) {
+	echo "no calendars found";
+	return;
+}
 
+foreach ($latestCalendar->VEVENT as $event){
+	//$eventdetails = $event->JsonSerialize()[1];
+	$eventdtstart = $event->dtstart->getValue();
+	$eventdtend = $event->dtend->getValue();
+	//$eventdescription = $event->description->getValue();
+	//$eventlocation = $event->location->getValue();
+	$eventstatus = $event->status->getValue();
+	$eventsummary = $event->summary->getValue();
+	echo("Event:$eventsummary Start: $eventdtstart End: $eventdtend <br>");
+}
+
+/*
 foreach($events as $event) {
 //$eventdetails = $event->JsonSerialize()[1];
 $eventdtstart = $event->dtstart->getValue();
@@ -18,8 +33,10 @@ $eventdescription = $event->description->getValue();
 $eventlocation = $event->location->getValue();
 $eventstatus = $event->status->getValue();
 $eventsummary = $event->summary->getValue();
-echo("Event:$eventsummary Start: $eventdtstart End: $eventdtend <br>");
+//echo("Event:$eventsummary Start: $eventdtstart End: $eventdtend <br>");
 }
+*/
+
 //var_dump($event[0]->select('summary'));
 //print("<pre>".print_r($event,true)."</pre>");
 //$json = $latestCalendar->JsonSerialize();
