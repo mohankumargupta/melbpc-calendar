@@ -3,11 +3,14 @@ include 'vendor/autoload.php';
 
 use Sabre\VObject;
 date_default_timezone_set('Australia/Melbourne');
+$ics = file_get_contents('http://mohankumargupta.com/melbpcwordpressmultisite/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events&no_html=true');
+//$ics = file_get_contents('timelyeventcalendar.ics');
+//echo "$ics<br>";
 $iCalendar = VObject\Reader::read(
-   file_get_contents('recur.ics'), VObject\Reader::OPTION_FORGIVING
+   $ics, VObject\Reader::OPTION_FORGIVING
 );
 
-$latestCalendar = $iCalendar->expand(new \DateTime('2013-09-28'), new \DateTime('2014-09-11'));
+$latestCalendar = $iCalendar->expand(new \DateTime('2017-06-01'), new \DateTime('2017-12-01'));
 if (!$latestCalendar->VEVENT) {
 	echo "no calendars found";
 	return;
@@ -15,13 +18,14 @@ if (!$latestCalendar->VEVENT) {
 
 foreach ($latestCalendar->VEVENT as $event){
 	//$eventdetails = $event->JsonSerialize()[1];
-	$eventdtstart = $event->dtstart->getValue();
-	$eventdtend = $event->dtend->getValue();
-	//$eventdescription = $event->description->getValue();
-	//$eventlocation = $event->location->getValue();
-	$eventstatus = $event->status->getValue();
-	$eventsummary = $event->summary->getValue();
-	echo("Event:$eventsummary Start: $eventdtstart End: $eventdtend <br>");
+	$eventdtstart = ($event->dtstart)? $event->dtstart->getValue(): "";
+	$eventdtend = ($event->dtend)? $event->dtend->getValue(): "";
+	$eventdescription = ($event->description)? $event->description->getValue(): "";
+    $eventlocation=($event->location)? $event->location->getValue(): "";
+	$eventstatus =  ($event->status)? $event->status->getValue() : "";
+	$eventsummary = ($event->summary)? $event->summary->getValue() : "";
+	$eventurl = ($event->url)? $event->url->getValue(): "";
+	echo("Event:$eventsummary Description: $eventdescription Start: $eventdtstart End: $eventdtend Location: $eventlocation  <br>");
 }
 
 /*
