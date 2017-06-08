@@ -13,6 +13,10 @@ class ComposerStaticInit04137cf59ad31e8daed615eeba5e2465
     );
 
     public static $prefixLengthsPsr4 = array (
+        'T' => 
+        array (
+            'Twig\\' => 5,
+        ),
         'S' => 
         array (
             'Sabre\\Xml\\' => 10,
@@ -31,9 +35,17 @@ class ComposerStaticInit04137cf59ad31e8daed615eeba5e2465
         array (
             'Dompdf\\' => 7,
         ),
+        'C' => 
+        array (
+            'CalendarBits\\' => 13,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Twig\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/twig/src',
+        ),
         'Sabre\\Xml\\' => 
         array (
             0 => __DIR__ . '/..' . '/sabre/xml/lib',
@@ -57,6 +69,10 @@ class ComposerStaticInit04137cf59ad31e8daed615eeba5e2465
         'Dompdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
+        ),
+        'CalendarBits\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/CalendarBits',
         ),
     );
 

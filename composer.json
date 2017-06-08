@@ -4,5 +4,11 @@
         "sabre/vobject": "^4.1",
         "twig/twig": "^1.33",
         "rlanvin/php-rrule": "^1.5"
-    }
+    },
+	
+	"autoload": {
+	  "psr-4": {
+	    "CalendarBits\\": "src/CalendarBits/"
+	  }
+	}
 }
