@@ -1,26 +1,12 @@
-<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-</head>
-<body>
-<style>
-
-h1 {
- color: #4EBAF0;
- font-size: 36px;
- font-weight: 900;
- width:100%;
- text-align:center;
-}
-
+<style type="text/css">
 table {
     table-layout: fixed;
-    width:100%;
-	padding-right:10px;
     border-collapse: collapse;
     border-spacing: 0;
 	border: 3px solid black;
+	width: 100%;
 }
 
 thead {
@@ -31,38 +17,34 @@ tbody td {
   border: 3px solid black;
 }
 
-body {
- font-size: 18px;
- font-weight: 900;
- margin:0;
- padding:0;
-}
-
 #logo {
- padding-left: 25px;
- padding-right: 25px;
- padding-top: 15px;
- padding-bottom: 15px;
+ height: 100%;
+ display: inline;
+ padding-left: 20px;
+ padding-top: 10px;
 }
 
 #tabletitle {
  font-size: 30px;
  font-weight:bold;
- text-align: center;
+ padding-left: 75px;
+ padding-top: 15px;
+ display:inline;
  color: white;
 }
 
 tbody td {
   border: 3px solid black;
-  text-align: center;
+  /*text-align: center;*/
+  vertical-align: top;
   width:50px;
   height:30px;
 }
 
 .tablerows td {
    width:50px;
-  height:200px;
-  min-height: 200px;
+  height:170px;
+  min-height: 170px;
 } 
 
 .header1 {
@@ -70,14 +52,38 @@ tbody td {
   font-weight: bold;
 }
 
+.headerRow td {
+  vertical-align: inherit;
+  text-align: center;
+  font-weight: bold;
+}
+
+.tableHeader {
+ height: 70px;
+}
+
+.top {
+  vertical-align: center;
+}
+
+
+
 </style>
-<h1>June Calendar</h1>
+</head>
+<body>
 <table>
 <thead>
-<tr><td id="logo" colspan="2"><img src="http://localhost/calendarmelbpc/logo.png" width="80" height="46"/></td><td id="tabletitle" colspan="5">SIG and other meetings June 2017 </td></tr><thead>
+<tr class="top">
+  <td class="tableHeader" colspan="7">
+     <span>
+      <span style="display:inline-block;padding-top:30px;padding-left:10px;"><img style="background-color:white;" src="http://localhost/calendarmelbpc/logo.png" width="80" height="46"/></span>
+      <span style="display:inline-block;padding-bottom:10px;padding-left:120px;color:white;font-size:24px;">SIG and other meetings June 2017 </span>
+     </span>
+  </td>
+</tr>
 </thead>
 <tbody>
-<tr><td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td></tr>
+<tr class="headerRow"><td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td></tr>
 {% for week in 0..4 %}
 <tr class="tablerows">
 {% for day in 0..6 %}
@@ -93,6 +99,5 @@ tbody td {
 
 </tbody>
 </table>
-
 </body>
 </html>
