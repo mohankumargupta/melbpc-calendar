@@ -1,8 +1,9 @@
 <?php
 namespace CalendarBits;
 
-require_once '/vendor/autoload.php';
+//require_once '/vendor/autoload.php';
 use Dompdf\Dompdf;
+use Sabre\VObject;
 
 
 
@@ -11,17 +12,36 @@ use Dompdf\Dompdf;
 class MelbPCCalendar {
 	function __construct($month, $year) {
 	  //print("constructor<br>");
+	  date_default_timezone_set('Australia/Melbourne');
 	  $this->month = $month;
 	  $this->year = $year;
 	} 
 	
 	function getCalendarData() {
-		
+	  $ics = file_get_contents('http://mohankumargupta.com/melbpcwordpressmultisite/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events&no_html=true');
+      $iCalendar = VObject\Reader::read(
+        $ics, VObject\Reader::OPTION_FORGIVING
+      );
+      $latestCalendar = $iCalendar->expand(new \DateTime('2017-06-01'), new \DateTime('2017-12-01'));
+      if (!$latestCalendar->VEVENT) {
+	    echo "no calendars found";
+	    return;
+      }
+
+      foreach ($latestCalendar->VEVENT as $event){
+	    //$eventdetails = $event->JsonSerialize()[1];
+	    $eventdtstart = ($event->dtstart)? $event->dtstart->getValue(): "";
+	    $eventdtend = ($event->dtend)? $event->dtend->getValue(): "";
+	    $eventdescription = ($event->description)? $event->description->getValue(): "";
+        $eventlocation=($event->location)? $event->location->getValue(): "";
+	    $eventstatus =  ($event->status)? $event->status->getValue() : "";
+	    $eventsummary = ($event->summary)? $event->summary->getValue() : "";
+	    $eventurl = ($event->url)? $event->url->getValue(): "";
+	    //echo("Event:$eventsummary Description: $eventdescription Start: $eventdtstart End: $eventdtend Location: $eventlocation  <br>");
+      }	  
 	}
 	
 	function renderCalendar($html) {
-		date_default_timezone_set('Australia/Melbourne');
-
 		$dompdf = new Dompdf();
 		$dompdf->set_option('chroot', '/calendarmelbpc');
 		$dompdf->set_option('isRemoteEnabled', true);
