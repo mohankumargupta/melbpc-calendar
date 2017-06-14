@@ -17,15 +17,17 @@ class MelbPCCalendar {
 	  $this->year = $year;
 	} 
 	
-	function getCalendarData() {
+	function getCalendarData($data) {
 	  $ics = file_get_contents('http://mohankumargupta.com/melbpcwordpressmultisite/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events&no_html=true');
       $iCalendar = VObject\Reader::read(
         $ics, VObject\Reader::OPTION_FORGIVING
       );
-      $latestCalendar = $iCalendar->expand(new \DateTime('2017-06-01'), new \DateTime('2017-12-01'));
+	  
+	  $latestCalendar = $iCalendar->expand(new \DateTime("first day of {$this->month} {$this->year}"), new \DateTime("last day of {$this->month} {$this->year}"));
+      //$latestCalendar = $iCalendar->expand(new \DateTime('2017-06-01'), new \DateTime('2017-12-01'));
       if (!$latestCalendar->VEVENT) {
-	    echo "no calendars found";
-	    return;
+	    //echo "no calendars found";
+	    return $data;
       }
 
       foreach ($latestCalendar->VEVENT as $event){
@@ -37,8 +39,16 @@ class MelbPCCalendar {
 	    $eventstatus =  ($event->status)? $event->status->getValue() : "";
 	    $eventsummary = ($event->summary)? $event->summary->getValue() : "";
 	    $eventurl = ($event->url)? $event->url->getValue(): "";
+		
+		$daytime = new \DateTime($eventdtstart, new \DateTimeZone('UTC'));
+		$daytime->setTimezone(new \DateTimeZone('Australia/Melbourne'));
+		$day = $daytime->format('j');
+		//echo "<div>{$eventdtstart} {$day} {$eventsummary}</div>";
+		$data[3 + $day]->content = array([$eventsummary,"header1"]);
 	    //echo("Event:$eventsummary Description: $eventdescription Start: $eventdtstart End: $eventdtend Location: $eventlocation  <br>");
       }	  
+	  
+	  return $data;
 	}
 	
 	function renderCalendar($html) {
@@ -93,6 +103,8 @@ class MelbPCCalendar {
 			
 		}
 		
+		$boo = $this->getCalendarData($boo);
+		//echo '<pre>'. print_r($boo, true) . '</pre>';
 		//echo $twig->render('/calendar.html',array('calendardata'=>$boo));
 		$html = $twig->render('/calendar.html',array('calendardata'=>$boo));
 	    $this->renderCalendar($html);
