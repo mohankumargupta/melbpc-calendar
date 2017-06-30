@@ -77,14 +77,14 @@ tbody td {
   <td class="tableHeader" colspan="7">
      <span>
       <span style="display:inline-block;padding-top:30px;padding-left:10px;"><img style="background-color:white;" src="http://localhost/calendarmelbpc/logo.png" width="80" height="46"/></span>
-      <span style="display:inline-block;padding-bottom:10px;padding-left:120px;color:white;font-size:24px;">SIG and other meetings June 2017 </span>
+      <span style="display:inline-block;padding-bottom:10px;padding-left:120px;color:white;font-size:24px;">SIG and other meetings {{month}} {{year}} </span>
      </span>
   </td>
 </tr>
 </thead>
 <tbody>
 <tr class="headerRow"><td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td></tr>
-{% for week in 0..4 %}
+{% for week in 0..5 %}
 <tr class="tablerows">
 {% for day in 0..6 %}
   <td>

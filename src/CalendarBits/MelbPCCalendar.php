@@ -17,7 +17,7 @@ class MelbPCCalendar {
 	  $this->year = $year;
 	} 
 	
-	function getCalendarData($data) {
+	function getCalendarData($data, $firstofmonth) {
 	  $ics = file_get_contents('http://mohankumargupta.com/melbpcwordpressmultisite/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events&no_html=true');
       $iCalendar = VObject\Reader::read(
         $ics, VObject\Reader::OPTION_FORGIVING
@@ -44,7 +44,7 @@ class MelbPCCalendar {
 		$daytime->setTimezone(new \DateTimeZone('Australia/Melbourne'));
 		$day = $daytime->format('j');
 		//echo "<div>{$eventdtstart} {$day} {$eventsummary}</div>";
-		$data[3 + $day]->content = array([$eventsummary,"header1"]);
+		$data[$firstofmonth - 1 + $day]->content = array([$eventsummary,"header1"]);
 	    //echo("Event:$eventsummary Description: $eventdescription Start: $eventdtstart End: $eventdtend Location: $eventlocation  <br>");
       }	  
 	  
@@ -94,8 +94,8 @@ class MelbPCCalendar {
 
         if ($firstofmonth >= 4 && $firstofmonth <=6) {
 			foreach(range(1,$numberofdaysinmonth) as $i) {
-			  $boo[3 + $i] = new \stdClass();
-			  $boo[3 + $i]->heading = $i;
+			  $boo[$firstofmonth - 1 + $i] = new \stdClass();
+			  $boo[$firstofmonth - 1 + $i]->heading = $i;
 			}
 		}
 		
@@ -103,10 +103,14 @@ class MelbPCCalendar {
 			
 		}
 		
-		$boo = $this->getCalendarData($boo);
+		$boo = $this->getCalendarData($boo, $firstofmonth);
 		//echo '<pre>'. print_r($boo, true) . '</pre>';
 		//echo $twig->render('/calendar.html',array('calendardata'=>$boo));
-		$html = $twig->render('/calendar.html',array('calendardata'=>$boo));
+		$html = $twig->render('/calendar.html',array(
+			      'calendardata'=>$boo,
+			      'month' => $this->month,
+			      'year' => $this->year
+			));
 	    $this->renderCalendar($html);
 	}
 }
