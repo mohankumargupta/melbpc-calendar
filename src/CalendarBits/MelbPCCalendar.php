@@ -34,6 +34,7 @@ class MelbPCCalendar {
 	    //$eventdetails = $event->JsonSerialize()[1];
 	    $eventdtstart = ($event->dtstart)? $event->dtstart->getValue(): "";
 	    $eventdtend = ($event->dtend)? $event->dtend->getValue(): "";
+
 	    $eventdescription = ($event->description)? $event->description->getValue(): "";
         $eventlocation=($event->location)? $event->location->getValue(): "";
 	    $eventstatus =  ($event->status)? $event->status->getValue() : "";
@@ -43,8 +44,18 @@ class MelbPCCalendar {
 		$daytime = new \DateTime($eventdtstart, new \DateTimeZone('UTC'));
 		$daytime->setTimezone(new \DateTimeZone('Australia/Melbourne'));
 		$day = $daytime->format('j');
+        $eventstarttime = $daytime->format('gA -');
+        
+		$daytime = new \DateTime($eventdtend, new \DateTimeZone('UTC'));
+		$daytime->setTimezone(new \DateTimeZone('Australia/Melbourne'));
+        $eventendtime = $daytime->format(' gA');
+	    $eventtime = "$eventstarttime $eventendtime";
 		//echo "<div>{$eventdtstart} {$day} {$eventsummary}</div>";
-		$data[$firstofmonth - 1 + $day]->content = array([$eventsummary,"header1"]);
+		$data[$firstofmonth - 1 + $day]->content = array(
+			[$eventsummary,"header1"], 
+			[$eventlocation, "header2"],
+			[$eventtime, "header3"]
+		);
 	    //echo("Event:$eventsummary Description: $eventdescription Start: $eventdtstart End: $eventdtend Location: $eventlocation  <br>");
       }	  
 	  
