@@ -90,9 +90,16 @@ tbody td {
   <td>
   <div class="{{ calendardata[loop.parent.week*7 + day].heading }}">{{ calendardata[loop.parent.week*7 + day].heading }}</div>
   {% for item in calendardata[loop.parent.week*7 + day].content %}
-  <div class="{{ item[1] }}">{{ item[0] | raw }}</div>
+  {%  if loop.index == 1 and calendardata[loop.parent.week*7 + day].url %}
+  <a target="_blank" href="{{ calendardata[loop.parent.week*7 + day].url }}">
+  {% endif %}
+  <div class="{{ item[1] }}">{{ item[0] | raw }}</div>  
+  {%  if loop.index == 1 and calendardata[loop.parent.week*7 + day].url %}
+  </a>
+  {% endif %}  
   {% endfor %}
   </td>
+
 {% endfor %}
 </tr>
 {% endfor %}

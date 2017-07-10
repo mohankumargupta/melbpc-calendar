@@ -56,6 +56,7 @@ class MelbPCCalendar {
 			[$eventlocation, "header2"],
 			[$eventtime, "header3"]
 		);
+	    $data[$firstofmonth - 1 + $day]->url = $eventdescription;
 	    //echo("Event:$eventsummary Description: $eventdescription Start: $eventdtstart End: $eventdtend Location: $eventlocation  <br>");
       }	  
 	  
