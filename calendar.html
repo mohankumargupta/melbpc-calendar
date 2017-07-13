@@ -15,6 +15,7 @@ thead {
 
 tbody td {
   border: 3px solid black;
+  word-wrap:break-word;
 }
 
 #logo {
@@ -39,17 +40,61 @@ tbody td {
   vertical-align: top;
   width:50px;
   height:30px;
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .tablerows td {
    width:50px;
-  height:170px;
-  min-height: 170px;
+  height:140px;
+  min-height: 140px;
+  text-align: center;
 } 
 
 .header1 {
-  font-size: 10px;
+  font-size: 18px;
   font-weight: bold;
+  text-align: left;
+}
+
+.header1Legend {
+   font-size: 18px;
+   font-weight: bold;
+}
+
+.header2 {
+ background-color: red;
+ text-align: left;
+ padding-left: 5px;
+ padding-top: 2px;
+}
+
+.header3 {
+ background-color: yellow;
+  text-align: left;
+ padding-left: 5px;
+  padding-top: 2px;
+}
+
+.header4 {
+  background-color: blue;
+   text-align: left;
+ padding-left: 5px;
+  padding-top: 2px;
+}
+
+.header5 {
+  background-color: purple;
+   text-align: left;
+ padding-left: 5px;
+  padding-top: 2px;
+}
+
+.header6 {
+  background-color: green;
+   text-align: left;
+ padding-left: 5px;
+  padding-top: 2px;
 }
 
 .headerRow td {
@@ -66,7 +111,9 @@ tbody td {
   vertical-align: center;
 }
 
-
+tbody td.legendbackground {
+  background-color: #cccccc;
+}
 
 </style>
 </head>
@@ -87,8 +134,8 @@ tbody td {
 {% for week in 0..5 %}
 <tr class="tablerows">
 {% for day in 0..6 %}
-  <td>
-  <div class="{{ calendardata[loop.parent.week*7 + day].heading }}">{{ calendardata[loop.parent.week*7 + day].heading }}</div>
+  <td class="{{ calendardata[loop.parent.week*7 + day].backgroundColor }}">
+  <div class="{{ calendardata[loop.parent.week*7 + day].headingClass }}">{{ calendardata[loop.parent.week*7 + day].heading }}</div>
   {% for item in calendardata[loop.parent.week*7 + day].content %}
   {%  if loop.index == 1 and calendardata[loop.parent.week*7 + day].url %}
   <a target="_blank" href="{{ calendardata[loop.parent.week*7 + day].url }}">

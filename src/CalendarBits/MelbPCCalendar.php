@@ -63,6 +63,14 @@ class MelbPCCalendar {
 	  return $data;
 	}
 	
+    function setupLegend($firstofmonth, &$data) {
+    	for ($i=0; $i<$firstofmonth; $i++) {
+    		if (!isset($data[$i]))
+    			$data[$i] = new \stdClass();
+    		$data[$i]->backgroundColor = "legendbackground";
+    	}
+    }
+
 	function renderCalendar($html) {
 		$dompdf = new Dompdf();
 		$dompdf->set_option('chroot', '/calendarmelbpc');
@@ -80,21 +88,23 @@ class MelbPCCalendar {
 		
 		$boo[0] = new \stdClass();
 		$boo[0]->heading = "Legend";
+		$boo[0]->backgroundColor = "legendbackground";
+		$boo[0]->headingClass = "header1Legend";
 		$boo[0]->content = array(
-		                         ["SIG meeting at MelbPC", "header1"],
-                       		     ["PC HQ, Moorabbin.","header1"],
-		                         ["Non-Moorabbin meeting.", "header1"],
-		                         ["Cancelled Meeting", "header1"],
-		                         ["Changed Meeting","header1"],
-		                         ["To be confirmed","header1"]
+		                         ["SIG meeting at MelbPC PC HQ, Moorabbin.", "header2"],
+		                         ["Non-Moorabbin meeting.", "header3"],
+		                         ["Cancelled Meeting", "header4"],
+		                         ["Changed Meeting","header5"],
+		                         ["To be confirmed","header6"]
 								);
 								
 				
         $boo[1] = new \stdClass();
 		$boo[1]->heading = "Changes";
+		$boo[1]->headingClass = "header1Legend";
 		$boo[1]->content = array(
-                           ["Please advise", "header1"],
-                           ["changes to", "header1"]					   
+                           ["Please advise", "header2"],
+                           ["changes to", "header3"]					   
 						   );
 				
 		$firstofmonth =  new \DateTime("first day of {$this->month} {$this->year}");
@@ -105,9 +115,12 @@ class MelbPCCalendar {
         $numberofdaysinmonth = cal_days_in_month(CAL_GREGORIAN, $monthindigit, $this->year);
 
         if ($firstofmonth >= 4 && $firstofmonth <=6) {
+            $this->setupLegend($firstofmonth, $boo);
+
 			foreach(range(1,$numberofdaysinmonth) as $i) {
 			  $boo[$firstofmonth - 1 + $i] = new \stdClass();
 			  $boo[$firstofmonth - 1 + $i]->heading = $i;
+			  $boo[$firstofmonth - 1 + $i]->headingClass = "header1";
 			}
 		}
 		
@@ -123,6 +136,7 @@ class MelbPCCalendar {
 			      'month' => $this->month,
 			      'year' => $this->year
 			));
+		//echo $html;
 	    $this->renderCalendar($html);
 	}
 }
