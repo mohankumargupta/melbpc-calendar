@@ -77,10 +77,11 @@ tbody td {
 }
 
 .header4 {
-  background-color: blue;
+  background-color: #FFCC99;
    text-align: left;
  padding-left: 5px;
   padding-top: 2px;
+  text-decoration: line-through;
 }
 
 .header5 {
@@ -93,6 +94,34 @@ tbody td {
 .header6 {
   background-color: green;
    text-align: left;
+ padding-left: 5px;
+  padding-top: 2px;
+}
+
+.header7 {
+  text-align: left;
+ padding-left: 5px;
+  padding-top: 2px;
+  font-size:14px;  
+}
+
+.header8 {
+  font-size: 12px;
+    text-align: left;
+ padding-left: 5px;
+  padding-top: 2px;
+  color: blue;
+  text-decoration: underline;
+}
+
+.header9 {
+   text-align: left;
+ padding-left: 5px;
+ padding-top: 2px;
+}
+
+.header10 {
+  text-align: left;
  padding-left: 5px;
   padding-top: 2px;
 }
@@ -140,7 +169,12 @@ tbody td.legendbackground {
   {%  if loop.index == 1 and calendardata[loop.parent.week*7 + day].url %}
   <a target="_blank" href="{{ calendardata[loop.parent.week*7 + day].url }}">
   {% endif %}
+
+  {% if item[2] %}
+   <div class="header8"><a href="{{ item[2] }}">{{ item[0] }}</a></div>
+  {% else %}
   <div class="{{ item[1] }}">{{ item[0] | raw }}</div>  
+  {% endif %}
   {%  if loop.index == 1 and calendardata[loop.parent.week*7 + day].url %}
   </a>
   {% endif %}  

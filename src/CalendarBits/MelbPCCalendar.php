@@ -52,7 +52,7 @@ class MelbPCCalendar {
 	    $eventtime = "$eventstarttime $eventendtime";
 		//echo "<div>{$eventdtstart} {$day} {$eventsummary}</div>";
 		$data[$firstofmonth - 1 + $day]->content = array(
-			[$eventsummary,"header1"], 
+			[$eventsummary,"header9"], 
 			[$eventlocation, "header2"],
 			[$eventtime, "header3"]
 		);
@@ -63,11 +63,41 @@ class MelbPCCalendar {
 	  return $data;
 	}
 	
-    function setupLegend($firstofmonth, &$data) {
+    function setupLegend($firstofmonth, $numberofdaysinmonth, &$data) {
+
+        $file = 'legend.json';
+        $file = file_get_contents($file);
+        $json = json_decode($file);
+        foreach ($json as $entry) {
+        	$pos = $entry->position - 1;
+        	$data[$pos] = new \stdClass();
+		    $data[$pos]->headingClass = "header1Legend";
+		    $data[$pos]->heading = $entry->heading;
+		    foreach ($entry->content as $nugget) {
+		    	$text = $nugget->text;
+		    	$css = $nugget->css;
+		    	if ($css == "header8") {
+		    		$link = $nugget->link;
+		    	    $data[$pos]->content[] = [$text, $css, $link];	
+		    	}
+
+		    	else {
+		    		$data[$pos]->content[] = [$text, $css];
+		    	}
+		    	
+		    }
+        }
+
     	for ($i=0; $i<$firstofmonth; $i++) {
     		if (!isset($data[$i]))
     			$data[$i] = new \stdClass();
     		$data[$i]->backgroundColor = "legendbackground";
+    	}
+
+    	for ($i = $firstofmonth + $numberofdaysinmonth; 
+    		$i<42; $i++) {
+              $data[$i] = new \stdClass();
+    		  $data[$i]->backgroundColor = "legendbackground";   
     	}
     }
 
@@ -86,6 +116,7 @@ class MelbPCCalendar {
 		$loader = new \Twig_Loader_Filesystem('/');
 		$twig = new \Twig_Environment($loader);
 		
+		/*
 		$boo[0] = new \stdClass();
 		$boo[0]->heading = "Legend";
 		$boo[0]->backgroundColor = "legendbackground";
@@ -106,6 +137,7 @@ class MelbPCCalendar {
                            ["Please advise", "header2"],
                            ["changes to", "header3"]					   
 						   );
+	    */
 				
 		$firstofmonth =  new \DateTime("first day of {$this->month} {$this->year}");
         $firstofmonth = $firstofmonth->format('N');
@@ -115,7 +147,7 @@ class MelbPCCalendar {
         $numberofdaysinmonth = cal_days_in_month(CAL_GREGORIAN, $monthindigit, $this->year);
 
         if ($firstofmonth >= 4 && $firstofmonth <=6) {
-            $this->setupLegend($firstofmonth, $boo);
+            $this->setupLegend($firstofmonth, $numberofdaysinmonth, $boo);
 
 			foreach(range(1,$numberofdaysinmonth) as $i) {
 			  $boo[$firstofmonth - 1 + $i] = new \stdClass();

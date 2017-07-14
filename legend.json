@@ -1,0 +1,83 @@
+[
+   {
+    "position":1,
+    "heading": "Legend",
+    "content": [
+     {
+        "text": "SIG meeting at MelbPC HQ, Moorabbin.",
+        "css": "header2"
+     },
+     {
+        "text": "Non-Moorabbin Meeting",
+        "css": "header3"
+     },
+     {
+        "text": "Cancelled Meeting",
+        "css": "header4"
+     },
+     {
+        "text": "Changed Meeting",
+        "css": "header5"
+     },
+     {
+        "text": "To be confirmed",
+        "css": "header6"
+
+     }
+    ]
+   },
+   {
+    "position": 2,
+    "heading": "Changes",
+    "content": [ 
+        {
+            "text": "Please advise changes to:",
+            "css": "header7"
+        },
+        {
+            "text": "calendar-admin@melbpc.org.au",
+            "link": "mailto:calendar-admin@melbpc.org.au",
+            "css": "header8"
+        }
+    ]
+   },
+   {
+    "position": 3,
+    "heading": "SIG Info",
+    "content": [
+      {
+        "text": "http://www.melbpc.org.au/interest-groups/",
+        "link": "http://www.melbpc.org.au/interest-groups/",
+        "css": "header8"
+      },
+      {
+        "text": "Recent Changes:",
+        "css": "header9"
+      },
+      {
+        "text": "http://www.melbpc.org.au/interest-groups-resources/sig-changes/",
+        "link": "http://www.melbpc.org.au/interest-groups-resources/sig-changes/",
+        "css": "header8"
+      }
+    ]
+   },
+   {
+    "position": 4,
+    "heading": "",
+    "content": [
+      {
+        "text": "Have a question Post It on Yammer",
+        "css": "header10"
+      },
+      {
+        "text": "Yammer:",
+        "css": "header9"
+      },
+      {
+        "text": "http://yammer.com/melbpc.org.au/",
+        "link": "http://yammer.com/melbpc.org.au/",
+        "css": "header8"
+      }
+    ]
+   }
+  ]
