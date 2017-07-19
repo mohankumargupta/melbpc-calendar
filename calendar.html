@@ -165,19 +165,15 @@ tbody td.legendbackground {
 {% for day in 0..6 %}
   <td class="{{ calendardata[loop.parent.week*7 + day].backgroundColor }}">
   <div class="{{ calendardata[loop.parent.week*7 + day].headingClass }}">{{ calendardata[loop.parent.week*7 + day].heading }}</div>
-  {% for item in calendardata[loop.parent.week*7 + day].content %}
-  {%  if loop.index == 1 and calendardata[loop.parent.week*7 + day].url %}
-  <a target="_blank" href="{{ calendardata[loop.parent.week*7 + day].url }}">
-  {% endif %}
+  {% for cell in calendardata[loop.parent.week*7 + day].content %}
 
+    {% for item in cell %}
   {% if item[2] %}
-   <div class="header8"><a href="{{ item[2] }}">{{ item[0] }}</a></div>
+   <div class="{{ item1 }}"><a target="_blank" href="{{ item[2] }}">{{ item[0] }}</a></div>
   {% else %}
   <div class="{{ item[1] }}">{{ item[0] | raw }}</div>  
-  {% endif %}
-  {%  if loop.index == 1 and calendardata[loop.parent.week*7 + day].url %}
-  </a>
-  {% endif %}  
+  {% endif %} 
+   {% endfor %}
   {% endfor %}
   </td>
 

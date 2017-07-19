@@ -51,13 +51,26 @@ class MelbPCCalendar {
         $eventendtime = $daytime->format(' gA');
 	    $eventtime = "$eventstarttime $eventendtime";
 		//echo "<div>{$eventdtstart} {$day} {$eventsummary}</div>";
+
+        $data[$firstofmonth - 1 + $day]->content[] = array(
+            [$eventsummary,"header9", $eventdescription], 
+            [$eventlocation, "header2"],
+            [$eventtime, "header3"]
+        );
+
+        /*
+        $data[$firstofmonth - 1 + $day]->url = $eventdescription;
+        */
+        /*
 		$data[$firstofmonth - 1 + $day]->content = array(
 			[$eventsummary,"header9"], 
 			[$eventlocation, "header2"],
 			[$eventtime, "header3"]
 		);
 	    $data[$firstofmonth - 1 + $day]->url = $eventdescription;
-	    //echo("Event:$eventsummary Description: $eventdescription Start: $eventdtstart End: $eventdtend Location: $eventlocation  <br>");
+	    */
+
+        //echo("Event:$eventsummary Description: $eventdescription Start: $eventdtstart End: $eventdtend Location: $eventlocation  <br>");
       }	  
 	  
 	  return $data;
@@ -78,11 +91,11 @@ class MelbPCCalendar {
 		    	$css = $nugget->css;
 		    	if ($css == "header8") {
 		    		$link = $nugget->link;
-		    	    $data[$pos]->content[] = [$text, $css, $link];	
+		    	    $data[$pos]->content[] = array([$text, $css, $link]);	
 		    	}
 
 		    	else {
-		    		$data[$pos]->content[] = [$text, $css];
+		    		$data[$pos]->content[] = array([$text, $css]);
 		    	}
 		    	
 		    }
@@ -115,29 +128,6 @@ class MelbPCCalendar {
 	function render() {
 		$loader = new \Twig_Loader_Filesystem('/');
 		$twig = new \Twig_Environment($loader);
-		
-		/*
-		$boo[0] = new \stdClass();
-		$boo[0]->heading = "Legend";
-		$boo[0]->backgroundColor = "legendbackground";
-		$boo[0]->headingClass = "header1Legend";
-		$boo[0]->content = array(
-		                         ["SIG meeting at MelbPC PC HQ, Moorabbin.", "header2"],
-		                         ["Non-Moorabbin meeting.", "header3"],
-		                         ["Cancelled Meeting", "header4"],
-		                         ["Changed Meeting","header5"],
-		                         ["To be confirmed","header6"]
-								);
-								
-				
-        $boo[1] = new \stdClass();
-		$boo[1]->heading = "Changes";
-		$boo[1]->headingClass = "header1Legend";
-		$boo[1]->content = array(
-                           ["Please advise", "header2"],
-                           ["changes to", "header3"]					   
-						   );
-	    */
 				
 		$firstofmonth =  new \DateTime("first day of {$this->month} {$this->year}");
         $firstofmonth = $firstofmonth->format('N');

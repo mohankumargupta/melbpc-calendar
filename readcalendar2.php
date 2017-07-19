@@ -10,7 +10,7 @@ $iCalendar = VObject\Reader::read(
    $ics, VObject\Reader::OPTION_FORGIVING
 );
 
-$latestCalendar = $iCalendar->expand(new \DateTime('2017-06-01'), new \DateTime('2017-12-01'));
+$latestCalendar = $iCalendar->expand(new \DateTime('2017-07-01'), new \DateTime('2017-07-31'));
 if (!$latestCalendar->VEVENT) {
 	echo "no calendars found";
 	return;
